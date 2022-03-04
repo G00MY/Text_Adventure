@@ -8,7 +8,7 @@ private Scanner kb;
     }
     
     public Command getCommand() {
-        //prompt for user to imput text
+        //prompt for user to input text
         System.out.println("> ");
         
         String inputLine;

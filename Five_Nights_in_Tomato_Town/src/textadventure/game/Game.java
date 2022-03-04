@@ -1,4 +1,5 @@
 package textadventure.game;
+import java.util.Scanner;
 
 public class Game {
 	private Parser parser;
@@ -10,7 +11,16 @@ public class Game {
         player = new Player();
     }
 
+    
     public void printInformation(){
+    	 Scanner scanner = new Scanner(System.in);
+         String [] intro = {"press enter", "Welcome to Five Nights in Tomato Town", "If at any point you don't know what to do type help", "You are about to start the game", "You won the Fortnite Victory Royal. But at what cost."};
+         System.out.println(intro[0]);
+         for (int i = 0; i < intro.length; i++) {
+       	  System.out.print(intro[i+1]);
+       	  scanner.nextLine();
+         }
+ 
         System.out.println(currentRoom.getShortDescription());
         System.out.println(player.getInventoryString());
         System.out.println(currentRoom.getInventoryString());
@@ -24,8 +34,9 @@ public class Game {
         game.play();
     }
 
+   
     public void setupGame(){
-        Room DiningHall =new Room("DiningHall", "You are in the DiningHall", "An empty Dining Hall. there is food everywhere");
+        Room DiningHall =new Room("Dining Hall", "You are in the DiningHall", "An empty Dining Hall. there is food everywhere");
         Room Kitchen = new Room ("Kitchen", "You are in the Kitchen", "You have entered the kitchen west of the dining room. The room is dark with axes everywhere. Hiding behind the counter is another bean looking robot. He has a plaque next to him with the name Gregory. Gregory is holding an empty bag."); 
         Room Theater = new Room ("Theater", "You are in the Theater", "you have entered the northernmost point of the building. There is a theater with a stage on it. All the lights are off but the curtains are open. The stage is a black abyss but you can see a silhouette of a robotic bean with legs on stage.  ");
         Room PlayPlace = new Room ("PlayPlace", "You are in the PlayPlace", "You are have entered the PlayPlace. There is a maze and a robot bear man standing next to it");
@@ -49,10 +60,10 @@ public class Game {
         DiningHall.setExit ("Theater", Theater);
         DiningHall.setExit ("PlayPlace", PlayPlace);
         DiningHall.setExit ( "SecretAttic", SecretAttic);
-        Kitchen.setExit ("DiningHall", DiningHall);
-        Theater.setExit("DiningHall", DiningHall);
-        PlayPlace.setExit("DiningHall", DiningHall);
-        SecretAttic.setExit("DiningHall", DiningHall);
+        Kitchen.setExit ("Dining Hall", DiningHall);
+        Theater.setExit("Dining Hall", DiningHall);
+        PlayPlace.setExit("Dining Hall", DiningHall);
+        SecretAttic.setExit("Dinin Hall", DiningHall);
         Maze.setExit("PlayPlace", PlayPlace);
         
         PlayPlace.setExit("Maze", Maze);
@@ -69,7 +80,9 @@ public class Game {
             }catch(Exception e) {
                 System.out.println(e);
             }
-         printInformation();
+        printInformation();
+        
+       
         play();
 
     }
@@ -110,7 +123,7 @@ public class Game {
                 
         }
     }
-    
+
     
     public void look(Command command){
         String printString = "Looking at ";
@@ -190,8 +203,11 @@ public class Game {
             
         }
          currentRoom = nextRoom;
-
     }
-		
-		
+    
 }
+
+   
+		
+		
+
