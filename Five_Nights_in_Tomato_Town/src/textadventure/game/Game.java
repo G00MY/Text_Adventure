@@ -6,6 +6,8 @@ public class Game {
     private Room currentRoom;
     private Player player;
     private CLS cls_var;
+    private int moveCounter = 0;
+    private boolean gameEnd = false;
     public Game(){
         parser = new Parser();
         player = new Player();
@@ -13,18 +15,13 @@ public class Game {
 
     
     public void printInformation(){
-    	 Scanner scanner = new Scanner(System.in);
-         String [] intro = {"press enter", "Welcome to Five Nights in Tomato Town", "If at any point you don't know what to do type help", "You are about to start the game", "You won the Fortnite Victory Royal. But at what cost."};
-         System.out.println(intro[0]);
-         for (int i = 0; i < intro.length; i++) {
-       	  System.out.print(intro[i+1]);
-       	  scanner.nextLine();
-         }
+    	
  
         System.out.println(currentRoom.getShortDescription());
         System.out.println(player.getInventoryString());
         System.out.println(currentRoom.getInventoryString());
         System.out.println(currentRoom.getExitString());
+        System.out.println(moveCounter);
         
     }
 
@@ -36,7 +33,14 @@ public class Game {
 
    
     public void setupGame(){
-        Room DiningHall =new Room("Dining Hall", "You are in the DiningHall", "An empty Dining Hall. there is food everywhere");
+    	 Scanner scanner = new Scanner(System.in);
+         String [] intro = {"press enter", "Welcome to Five Nights in Tomato Town!", "If at any point you don't know what to do type help", "You are about to start the game", "You won the Fortnite Victory Royal. But at what cost.", "You spent all of your VBucks on Durr Burgers", "Now you are broke and you must work at a Pizza Palace as an overnight Security Guard.", "The last person who had this job mysteriously DIED!", "Good luck and escape" };
+         //System.out.println(intro.length);
+         for (int i = 0; i < intro.length; i++) {
+       	  System.out.print(intro[i]);
+       	  scanner.nextLine();
+         }
+        Room DiningHall =new Room("DiningHall", "You are in the DiningHall", "An empty Dining Hall. there is food everywhere");
         Room Kitchen = new Room ("Kitchen", "You are in the Kitchen", "You have entered the kitchen west of the dining room. The room is dark with axes everywhere. Hiding behind the counter is another bean looking robot. He has a plaque next to him with the name Gregory. Gregory is holding an empty bag."); 
         Room Theater = new Room ("Theater", "You are in the Theater", "you have entered the northernmost point of the building. There is a theater with a stage on it. All the lights are off but the curtains are open. The stage is a black abyss but you can see a silhouette of a robotic bean with legs on stage.  ");
         Room PlayPlace = new Room ("PlayPlace", "You are in the PlayPlace", "You are have entered the PlayPlace. There is a maze and a robot bear man standing next to it");
@@ -88,7 +92,7 @@ public class Game {
     }
 
     public void play() {
-        while(true) {
+        while(!gameEnd) {
             Command command = parser.getCommand();
             try{
                 cls_var.main();
@@ -158,6 +162,7 @@ public class Game {
         if(!command.hasSecondWord()){
             System.out.println("Grab What?");
             return;
+        
         }
         String item = command.getSecondWord();
         Item itemToGrab = currentRoom.removeItem(item);
@@ -183,7 +188,11 @@ public class Game {
     }
 
     public void goRoom(Command command){
-        String direction = "";
+    	 moveCounter++;
+    	 if (moveCounter >= 1) {
+    		 gameEnd= true;
+    	 }
+        String direction = ""; 
         if(!command.hasSecondWord()) {
             System.out.println("Go where?");
             return;
@@ -203,6 +212,7 @@ public class Game {
             
         }
          currentRoom = nextRoom;
+        
     }
     
 }
@@ -210,4 +220,5 @@ public class Game {
    
 		
 		
+
 
